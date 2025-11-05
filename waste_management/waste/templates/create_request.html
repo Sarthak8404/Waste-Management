@@ -1,0 +1,37 @@
+{% extends 'waste/base.html' %} {% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body p-5">
+        <h2 class="card-title mb-4">Request Waste Pickup</h2>
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Waste Category</label>
+            {{ form.category }}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            {{ form.description }}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Pickup Address</label>
+            {{ form.address }}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Quantity</label>
+            {{ form.quantity }}
+          </div>
+          <button type="submit" class="btn btn-success btn-lg w-100 mt-3">
+            Submit Request
+          </button>
+          <a href="{% url 'home' %}" class="btn btn-secondary btn-lg w-100 mt-2"
+            >Cancel</a
+          >
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

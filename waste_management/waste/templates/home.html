@@ -1,0 +1,75 @@
+{% extends 'waste/base.html' %} {% block content %}
+<div class="row mb-4">
+  <div class="col-12">
+    <div class="card bg-white">
+      <div class="card-body text-center py-5">
+        <h1 class="display-4 mb-3">♻️ Welcome to Waste Management System</h1>
+        <p class="lead text-muted">
+          Making waste collection easier and more efficient
+        </p>
+        {% if not user.is_authenticated %}
+        <div class="mt-4">
+          <a href="{% url 'register' %}" class="btn btn-primary btn-lg me-2"
+            >Get Started</a
+          >
+          <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg"
+            >Login</a
+          >
+        </div>
+        {% else %}
+        <a href="{% url 'create_request' %}" class="btn btn-success btn-lg mt-3"
+          >Request Pickup</a
+        >
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-12">
+    <h2 class="text-white mb-3">Waste Categories We Handle</h2>
+  </div>
+  {% for category in categories %}
+  <div class="col-md-4 mb-3">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title text-primary">{{ category.name }}</h5>
+        <p class="card-text">{{ category.description }}</p>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <div class="alert alert-info">No waste categories available yet.</div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <h2 class="text-white mb-3">Collection Schedule</h2>
+  </div>
+  {% for schedule in schedules %}
+  <div class="col-md-6 mb-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">📍 {{ schedule.area }}</h5>
+        <p class="mb-1"><strong>Day:</strong> {{ schedule.day_of_week }}</p>
+        <p class="mb-1"><strong>Time:</strong> {{ schedule.time_slot }}</p>
+        <p class="mb-0">
+          <strong>Types:</strong>
+          {% for wtype in schedule.waste_types.all %}
+          <span class="badge bg-success">{{ wtype.name }}</span>
+          {% endfor %}
+        </p>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <div class="alert alert-info">No collection schedules available yet.</div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
